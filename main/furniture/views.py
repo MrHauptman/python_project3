@@ -1,5 +1,5 @@
-from django.contrib.auth import logout, login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout, login, REDIRECT_FIELD_NAME
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseNotFound, Http404
@@ -11,7 +11,21 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import *
 from .models import *
 from .utils import *
-
+def login_required(
+    function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None
+):
+    """
+    Decorator for views that checks that the user is logged in, redirecting
+    to the log-in page if necessary.
+    """
+    actual_decorator = user_passes_test(
+        lambda u: u.is_authenticated,
+        login_url=login_url,
+        redirect_field_name=redirect_field_name,
+    )
+    if function:
+        return actual_decorator(function)
+    return actual_decorator
 @login_required
 def sortfurniture(request, sort_slug):
     furniture = Furniture.objects.order_by(sort_slug)
