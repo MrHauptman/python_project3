@@ -9,7 +9,7 @@ class Furniture(models.Model):
     time_create = models.DateField(auto_now_add=True, verbose_name="Дата создания")
     time_update = models.DateField(auto_now=True,verbose_name="Время редактирования")
     is_published=models.BooleanField(default=True, verbose_name="Публикация")
-    cat = models.ForeignKey('Category', on_delete=models.PROTECT,  verbose_name="Категории")
+    cat = models.ForeignKey('Category', on_delete=models.PROTECT,  verbose_name="Принадлежность к ассортименту")
 
     def __str__(self):
         return self.title
@@ -24,7 +24,7 @@ class Furniture(models.Model):
 
 
 class Category(models.Model):
-        name = models.CharField(max_length=100, db_index=True, verbose_name='Категория')
+        name = models.CharField(max_length=100, db_index=True, verbose_name='Ассортимент')
         slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
 
         def __str__(self):
@@ -34,6 +34,6 @@ class Category(models.Model):
             return reverse('category', kwargs={'cat_slug': self.slug})
 
         class Meta:
-            verbose_name ='категорию'
-            verbose_name_plural ='Категории'
+            verbose_name ='Ассортимент'
+            verbose_name_plural ='Ассортименты'
             ordering=['id']

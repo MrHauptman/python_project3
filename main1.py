@@ -3,7 +3,7 @@ exp_num = 0
 product_num = 0
 
 exp_num = int(input('Введите количество экспертов'))
-product_num = int(input('Введите количество продуктов'))
+product_num = int(input('Введите количество видов ассортимента'))
 rate = 0
 buffer = list()
 arr_str=0

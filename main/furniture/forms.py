@@ -9,7 +9,7 @@ class AddPostForm(forms.Form):
     slug = forms.SlugField(max_length=255, label ="slug(Для администратора)")
     content = forms.CharField(widget=forms.Textarea(attrs={'cols':60, 'rows':10}), label="Содержимое")
     is_published = forms.BooleanField(label="Публикация",required=False,initial=True)
-    cat = forms.ModelChoiceField(queryset=Category.objects.all(), label="Категории",empty_label="")
+    cat = forms.ModelChoiceField(queryset=Category.objects.all(), label="Ассортименты",empty_label="")
 
 
 class RegisterUserForm(UserCreationForm):
