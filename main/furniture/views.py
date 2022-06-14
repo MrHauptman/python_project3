@@ -144,22 +144,13 @@ class RegisterUser(DataMixin, CreateView):
      def form_valid(self, form):
          user = form.save()
          login(self.request, user)
+         user1 = user.username
+         is_voted = False
+         vote = ExpertVoted.objects.create(user=user1, is_voted=is_voted)
+         vote.save()
          return redirect('home')
 
-# def show_category(request, cat_id):
-#     posts = Women.objects.filter(cat_id=cat_id)
-#
-#     if len(posts) == 0:
-#         raise Http404()
-#
-#     context = {
-#         'posts': posts,
-#         'menu': menu,
-#         'title': 'Отображение по рубрикам',
-#         'cat_selected': cat_id,
-#     }
-#
-#     return render(request, 'women/index.html', context=context)
+
 
 class LoginUser(DataMixin, LoginView):
      form_class = AuthenticationForm
@@ -176,3 +167,48 @@ class LoginUser(DataMixin, LoginView):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+
+
+
+
+def expertmark(request):
+    if request.method == 'POST':
+        product1mark = request.POST['product1mark']
+        product2mark = request.POST['product2mark']
+        product3mark = request.POST['product3mark']
+        products = ProductVote.objects.create(product1mark=product1mark, product2mark=product2mark,product3mark=product3mark,)
+        products.save()
+
+
+        return redirect('/')
+    else:
+        form = ExpertForm()
+        return render (request, 'expertmark.html', {'form':form})
+
+def expertresult(request):
+    a = 0
+    result1 = 0
+    result2 = 0
+    result3 = 0
+    products = ProductVote.objects.all()
+    pr = Furniture.objects.all()
+    for product in products:
+        result1 += product.product1mark
+        result2 += product.product2mark
+        result3 += product.product3mark
+        a += 1
+    result1 = result1/a
+    result2 = result2/a
+    result3 = result3/a
+    if result1 > result2 and result1 > result3:
+        prname = pr[0].cat
+        result = result1
+    elif result2 > result1 and result2 >result3:
+        prname = pr[1].cat
+        result = result2
+    else:
+        prname = pr[2].cat
+        result = result3
+    data ={'prname':prname,'result':result}
+    return render (request, 'result.html', data)

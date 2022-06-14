@@ -1,6 +1,7 @@
 from django.urls import path, re_path
 
 from .views import*
+from . import views
 urlpatterns= [
     path('', FurnitureHome.as_view(),name='home'),
     path('about/',about, name ='about'),
@@ -11,7 +12,8 @@ urlpatterns= [
     path('register/', RegisterUser.as_view(), name = 'register'),
     path('post/<slug:post_slug>/', ShowPost.as_view(), name='post'),
     path('category/<slug:cat_slug>/',FurnitureCategory.as_view(), name='category'),
-    path('admin/',Adminpanel,name='admin')
-
+    path('admin/',Adminpanel,name='admin'),
+    path('expertmark', views.expertmark, name='expertmark'),
+    path('expertresult', views.expertresult, name='expertresult'),
 
 ]

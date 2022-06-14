@@ -41,7 +41,7 @@
 {% else %}
 		<li><a href="{% url 'home' %}">Все виды ассортиментов</a></li>
 {% endif %}
-
+<li><a href="{% url 'expertmark' %}">Экспертный метод</a></li> <li><a href="{% url 'expertresult' %}">Посмотреть результат</a></li>
 {% for c in cats %}
 {% if c.furniture__count > 0 %}
 	{% if c.pk == cat_selected %}

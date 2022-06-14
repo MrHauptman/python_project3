@@ -37,3 +37,13 @@ class Category(models.Model):
             verbose_name ='Ассортимент'
             verbose_name_plural ='Ассортименты'
             ordering=['id']
+
+
+class ExpertVoted(models.Model):
+    user = models.CharField(max_length = 100)
+    is_voted = models.BooleanField()
+
+class ProductVote(models.Model):
+    product1mark = models.IntegerField()
+    product2mark = models.IntegerField()
+    product3mark = models.IntegerField()
