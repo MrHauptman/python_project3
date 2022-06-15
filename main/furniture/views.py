@@ -183,8 +183,9 @@ def expertmark(request):
 
         return redirect('/')
     else:
+        cats = Admincreatevote.objects.all()
         form = ExpertForm()
-        return render (request, 'expertmark.html', {'form':form})
+        return render (request, 'expertmark.html', {'form':form, 'cats':cats})
 
 def expertresult(request):
     a = 0

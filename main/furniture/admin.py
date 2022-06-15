@@ -18,6 +18,6 @@ class CategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(Furniture, FurnitureAdmin)
 admin.site.register(Category, CategoryAdmin)
-
+admin.site.register(Admincreatevote)
 admin.site.register(ExpertVoted)
 admin.site.register(ProductVote)

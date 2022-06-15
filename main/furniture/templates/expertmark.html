@@ -1,15 +1,25 @@
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Регистрация</title>
+    <title>Ввод оценок</title>
 </head>
 <body>
     <form method="POST">
             {% csrf_token %}
+        {%for cat in cats %}
         <table>
+            <h3>product1== {{ cat.category1 }}</h3>
+            <br>
+            <h3>product2 == {{cat.category2}}</h3>
+            <br>
+            <h3> product3 == {{cat.category3}}</h3>
+            <br>
             {{ form }}
         </table>
+
+        {%endfor%}
         <input type="submit" value="Send" >
     </form>
 </body>

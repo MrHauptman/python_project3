@@ -47,3 +47,8 @@ class ProductVote(models.Model):
     product1mark = models.IntegerField()
     product2mark = models.IntegerField()
     product3mark = models.IntegerField()
+
+class Admincreatevote(models.Model):
+    category1 = models.ForeignKey('Category', on_delete=models.PROTECT,  verbose_name="Принадлежность к ассортименту", related_name='category1')
+    category2 = models.ForeignKey('Category', on_delete=models.PROTECT,  verbose_name="Принадлежность к ассортименту",related_name='category2')
+    category3 = models.ForeignKey('Category', on_delete=models.PROTECT,  verbose_name="Принадлежность к ассортименту",related_name='category3')
