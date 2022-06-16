@@ -1,0 +1,19 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Оценка товарных ассортиментов</title>
+</head>
+    <body>
+        <form method="POST">
+            {% csrf_token %}
+            <h2>Ассортимент</h2>
+
+
+             <h3>{{cat.name}}</h3>
+                <h3>Поставьте оценку ассортименту</h3>
+                <table>
+                    {{ form }}
+                </table>
+        </form>
+    </body>
+</html>

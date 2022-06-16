@@ -1,0 +1,21 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Вывод ассортиментов</title>
+</head>
+    <body>
+        {% csrf_token %}
+        <h2>Список лучших ассортиментов</h2>
+
+        {% for cat in cats %}
+
+        <h3>{{cat.name}}</h3>
+
+        {% endfor %}
+
+        <h2>Их рейтинг соответственно</h2>
+        {% for mas in mass %}
+        <h3>{{mas}}</h3>
+        {% endfor %}
+    </body>
+</html>
