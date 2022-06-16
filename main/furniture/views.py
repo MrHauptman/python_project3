@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth import logout, login, REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -213,3 +215,83 @@ def expertresult(request):
         result = result3
     data ={'prname':prname,'result':result}
     return render (request, 'result.html', data)
+
+arr = []
+i = [0,1]
+
+@login_required(login_url='login')
+def grade(request):
+    catAmount= Category.objects.count()
+    cats = Category.objects.all()
+    if request.method =="POST":
+        cell = request.POST["grade"]
+        cell = int(cell)
+        arr[i[0]] = cell
+        i[0]= i[0] + 1
+        if i[0]==catAmount:
+            jackson = json.dumps(arr, indent=4)
+            user = request.user.username
+            grades = Grades.objects.create(chargrade = jackson, user = user)
+            gr = Grades.objects.all()
+            for g in gr:
+                if user == g.user:
+                    g.delete()
+            grades.save()
+            return redirect('home')
+        cat1 = cats[i[0]]
+        form = GradeForm()
+        data = {'form':form, 'cat':cat1}
+        return render(request, 'grade.html', context=data)
+    else:
+        arr.clear()
+        i[0] = 0
+
+        for jj in range(catAmount):
+            arr.append(-1)
+        cat1 = cats[i[0]]
+        form = GradeForm()
+        data = {'form':form, 'cat':cat1}
+        return render(request, 'grade.html',context=data)
+
+def method(request):
+
+
+        gradelen = Category.objects.count()         #
+        #sups2 = list(Category.objects.all())
+        catlen = Grades.objects.count()             #
+
+        grades = Grades.objects.all()
+        mass = []
+        for p in grades:
+            buf = list(json.loads(p.chargrade))
+            buf2 = buf.copy()
+            mass.append(buf2)
+
+        markmass = []
+        for j in range(gradelen):
+            mark = 0
+            for i in range(catlen):
+                mark = mark + mass[i][j]
+            markmass.append(mark)
+        sum = 0
+        for i in markmass:
+            sum = sum + i
+
+        leng = len(markmass)
+        for i in range(leng):
+            markmass[i]= markmass[i]/sum
+
+
+        cats = list(Category.objects.all())
+        for i in range(gradelen-1):
+            for j in range(gradelen-i-1):
+                if markmass[j] < markmass[j+1]:
+                    markmass[j], markmass[j+1] = markmass[j+1], markmass[j]
+                    bbuf =cats[j]
+                    cats[j] = cats[j+1]
+                    cats[j+1] = bbuf
+
+
+
+        data = {'cats':cats, 'mass':markmass}
+        return render(request, "mass.html", context=data)

@@ -15,5 +15,7 @@ urlpatterns= [
     path('admin/',Adminpanel,name='admin'),
     path('expertmark', views.expertmark, name='expertmark'),
     path('expertresult', views.expertresult, name='expertresult'),
+    path('grade',views.grade, name='grade'),
+    path("mass",views.method, name='mass'),
 
 ]

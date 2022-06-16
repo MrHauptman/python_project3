@@ -1,26 +1,21 @@
-<!DOCTYPE html>
-
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Ввод оценок</title>
+    <title>Вывод ассортиментов</title>
 </head>
-<body>
-    <form method="POST">
-            {% csrf_token %}
-        {%for cat in cats %}
-        <table>
-            <h3>product1== {{ cat.category1 }}</h3>
-            <br>
-            <h3>product2 == {{cat.category2}}</h3>
-            <br>
-            <h3> product3 == {{cat.category3}}</h3>
-            <br>
-            {{ form }}
-        </table>
+    <body>
+        {% csrf_token %}
+        <h2>Список лучших ассортиментов</h2>
 
-        {%endfor%}
-        <input type="submit" value="Send" >
-    </form>
-</body>
+        {% for cat in cats %}
+
+        <h3>{{cat.name}}</h3>
+
+        {% endfor %}
+
+        <h2>Их рейтинг соответственно</h2>
+        {% for mas in mass %}
+        <h3>{{mas}}</h3>
+        {% endfor %}
+    </body>
 </html>

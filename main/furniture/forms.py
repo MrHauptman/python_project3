@@ -31,3 +31,7 @@ class ExpertForm(forms.Form):
     product1mark = forms.IntegerField()
     product2mark = forms.IntegerField()
     product3mark = forms.IntegerField()
+
+
+class GradeForm(forms.Form):
+    grade = forms.IntegerField(max_value=100, min_value=0, label="Оценка")
